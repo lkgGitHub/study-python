@@ -18,15 +18,13 @@ if __name__ == '__main__':
     server_port = re.findall(server_port_pattern, s)
     method = re.findall(method_pattern, s)
     password = re.findall(password_pattern, s)
+
     configs = []
     for i in range(len(server)):
         print()
         port = server_port[i][server_port[i].find(":") + 2:len(server_port[i])]
         method = method[i][method[i].find(":") + 3:len(method[i])-1]
         password = password[i][password[i].find(":") + 3:len(password[i])-1]
-        print("port:", port)
-        print("method:", method)
-        print("password:", password)
         config = {
             'server': server[i],
             'server_port': int(port),
@@ -34,13 +32,19 @@ if __name__ == '__main__':
             'method': method,
             'plugin': '', 'plugin_opts': '', 'plugin_args': '', 'remarks': '', 'timeout': 5}
         configs.append(config)
-    print(configs)
 
+    print(configs)
     content = ""
-    with open("./gui-back.json", 'rt') as g:
-        j = json.loads(g.read())
-        j['configs'] = configs
-        content = json.dumps(j)
+    try:
+        with open("./gui-config.json", 'rt') as g:
+            j = json.loads(g.read())
+            j['configs'] = configs
+            content = json.dumps(j)
+    except:
+        with open("./gui-back.json", 'rt') as g:
+            j = json.loads(g.read())
+            j['configs'] = configs
+            content = json.dumps(j)
     with open("./gui-config.json", 'wt') as g:
         g.write(content)
 
