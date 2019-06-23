@@ -21,7 +21,6 @@ if __name__ == '__main__':
 
     configs = []
     for i in range(len(server)):
-        print()
         port = server_port[i][server_port[i].find(":") + 2:len(server_port[i])]
         method = method[i][method[i].find(":") + 3:len(method[i])-1]
         password = password[i][password[i].find(":") + 3:len(password[i])-1]
@@ -32,21 +31,22 @@ if __name__ == '__main__':
             'method': method,
             'plugin': '', 'plugin_opts': '', 'plugin_args': '', 'remarks': '', 'timeout': 5}
         configs.append(config)
+        print("==="*10)
+        print('server: {}\nport:{}\npassword:{}\nmethod:{}'.format(server[0], int(port), password, method))
 
-    print(configs)
     content = ""
-    try:
-        with open("./gui-config.json", 'rt') as g:
-            j = json.loads(g.read())
-            j['configs'] = configs
-            content = json.dumps(j)
-    except:
-        with open("./gui-back.json", 'rt') as g:
-            j = json.loads(g.read())
-            j['configs'] = configs
-            content = json.dumps(j)
-    with open("./gui-config.json", 'wt') as g:
-        g.write(content)
+    # try:
+    #     with open("./gui-config.json", 'rt') as g:
+    #         j = json.loads(g.read())
+    #         j['configs'] = configs
+    #         content = json.dumps(j)
+    # except:
+    #     with open("./gui-back.json", 'rt') as g:
+    #         j = json.loads(g.read())
+    #         j['configs'] = configs
+    #         content = json.dumps(j)
+    # with open("./gui-config.json", 'wt') as g:
+    #     g.write(content)
 
 
 
