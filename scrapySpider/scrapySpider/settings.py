@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for wechat project
+# Scrapy settings for scrapySpider project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'wechat'
+BOT_NAME = 'scrapySpider'
 
-SPIDER_MODULES = ['wechat.spiders']
-NEWSPIDER_MODULE = 'wechat.spiders'
+SPIDER_MODULES = ['scrapySpider.spiders']
+NEWSPIDER_MODULE = 'scrapySpider.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'wechat (+http://www.yourdomain.com)'
+#USER_AGENT = 'scrapySpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'wechat.middlewares.WechatSpiderMiddleware': 543,
+#    'scrapySpider.middlewares.ScrapyspiderSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'wechat.middlewares.WechatDownloaderMiddleware': 543,
+#    'scrapySpider.middlewares.ScrapyspiderDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'wechat.pipelines.WechatPipeline': 300,
+#    'scrapySpider.pipelines.ScrapyspiderPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
