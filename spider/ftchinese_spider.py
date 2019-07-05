@@ -30,6 +30,7 @@ def parse_news(story_url):
     for p in story_soup.find("div", id="story-body-container").find_all("p"):
         if p.string:
             content += p.string + "\r\n"
+    print("title:", title)
     print(content)
 
 
@@ -38,6 +39,6 @@ if __name__ == '__main__':
     soup = BeautifulSoup(response.text, "lxml")
     soups = soup.find_all("a",class_=re.compile("item-headline-link"), href=re.compile("/story/"))# 等价于：soups = soup.find_all("a", attrs={"class": re.compile("item-headline-link"), "href": re.compile("/story/")})
     print(len(soups))
-    for s in soups:
-        print(s)
-    # parse_news(base_url + "/story/001083005")
+    # for s in soups:
+    #     print(s)
+    parse_news(base_url + "/story/001083476")
