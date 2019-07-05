@@ -13,7 +13,7 @@ def dowload(name, src):
 if __name__ == '__main__':
     start = time.time()
     base_url = "https://www.lsm.me/"
-    page = 1
+    page = 2
     lsm = "https://www.lsm.me/plugin.php?id=group&page=%s" % page
     content = requests.get(lsm, timeout=10)
     res = r'<a href="thread-.*? target="_blank"/>'
