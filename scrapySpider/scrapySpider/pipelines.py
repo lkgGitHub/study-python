@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
-import codecs
-import csv
 
 # Define your item pipelines here
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import json
 
 from scrapy.exporters import JsonItemExporter, CsvItemExporter
-
-
-def open_spider(spider):
-    print("==========打开 json 文件===========")
 
 
 class JsonWriterPipeline(object):
