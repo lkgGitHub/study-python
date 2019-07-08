@@ -18,8 +18,6 @@ class NewsItem(scrapy.Item):
 
 
 class ArticleItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     title = scrapy.Field()
     weixin_name = scrapy.Field()
     time = scrapy.Field()
@@ -28,9 +26,9 @@ class ArticleItem(scrapy.Item):
 
 
 class AccountItem(scrapy.Item):
-    name = scrapy.Field()
-    account = scrapy.Field()
-    recommend = scrapy.Field()
-    Authentication = scrapy.Field()
-    article_lately = scrapy.Field()
+    name = scrapy.Field()  # 微信名
+    account = scrapy.Field()  # 微信号
+    recommend = scrapy.Field()  # 功能介绍
+    authentication = scrapy.Field()  # 微信认证
+    article_lately = scrapy.Field()  # 最近文章：
     time = scrapy.Field()

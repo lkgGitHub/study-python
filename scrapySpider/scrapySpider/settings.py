@@ -50,9 +50,10 @@ COOKIES_ENABLED = True
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'scrapySpider.middlewares.UserAgentMiddleware': 544,
+   'scrapySpider.middlewares.SeleniumDownloaderMiddleware': 543,
+   # 'scrapySpider.middlewares.UserAgentMiddleware': 544,
    # 'scrapySpider.middlewares.ProxyMiddleware': 811,
-   'scrapySpider.middlewares.CodeMiddleware': 812,
+   # 'scrapySpider.middlewares.CodeMiddleware': 812,
 }
 
 # Enable or disable extensions

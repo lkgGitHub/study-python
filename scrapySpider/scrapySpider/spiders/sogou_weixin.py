@@ -7,18 +7,24 @@ from ..items import ArticleItem, AccountItem
 
 class SogouWeixinSpider(scrapy.Spider):
     name = 'sogou_weixin0'
-    # allowed_domains = ['http://weixin.sogou.com']
-    # start_urls = ['http://http://weixin.sogou.com/']
+    allowed_domains = ['weixin.sogou.com']
+    # start_urls = ['https://weixin.sogou.com/']
     logger = logging.getLogger(__name__)
-    page_article_url = 'https://weixin.sogou.com/weixin?query={word}&_sug_type_=&s_from=input&_sug_=n&type=2&page={page}&ie=utf8'
-    page_account_url = 'https://weixin.sogou.com/weixin?query={word}&_sug_type_=&s_from=input&_sug_=n&type=1&page={page}&ie=utf8'
-    test_url = 'https://weixin.sogou.com/weixin?query=%E5%90%89%E4%BB%96&_sug_type_=&sut=3885&lkt=5%2C1542871482953%2C1542871486820&s_from=input&_sug_=n&type=2&sst0=1542871486923&page=20&ie=utf8&w=01019900&dr=1'
+    # 公众号搜索url格式
+    page_account_url = 'https://weixin.sogou.com/weixin?' \
+                       'type=1&query={word}&_sug_type_=&s_from=input&_sug_=y&page={page}&ie=utf8'
+    # 文章搜索url格式
+    page_article_url = 'https://weixin.sogou.com/weixin?' \
+                       'type=2&query={word}&_sug_type_=&s_from=input&_sug_=y&page={page}&ie=utf8'
 
+    test_url = 'https://weixin.sogou.com/weixin?query=%E5%90%89%E4%BB%96&_sug_type_=&sut=3885&lkt=5%2C1542871482953%2C1542871486820&s_from=input&_sug_=n&type=2&sst0=1542871486923&page=20&ie=utf8&w=01019900&dr=1'
     # with open('/Users')
 
     def start_requests(self):
-        word = input('please input the word for search:')
-        page = int(input('please input the start_page:'))
+        # word = input('please input the word for search:')
+        # page = int(input('please input the start_page:'))
+        word = '石油'
+        page = '1'
         # 文章类抓取链接
         # yield scrapy.Request(url=self.page_article_url.format(word=word, page=page), callback=self.article_parse,
         #                      meta={'page': page, 'word': word, 'retry_times': True}, dont_filter=True)
@@ -60,7 +66,7 @@ class SogouWeixinSpider(scrapy.Spider):
 
     def account_parse(self, response):
         """
-               账号抓取parse
+           账号抓取parse
         """
         cookies = response.request.cookies
         word = response.meta.get('word')
@@ -72,14 +78,13 @@ class SogouWeixinSpider(scrapy.Spider):
             item['name'] = ''.join(info.xpath('./div//a//text()').extract())
             item['account'] = info.xpath('./div//label[@name="em_weixinhao"]/text()').extract_first()
             item['recommend'] = ''.join(info.xpath('./dl[1]/dd//text()').extract())
-            item['Authentication'] = ''.join(info.xpath('./dl[2]/dd//text()').extract())
+            item['authentication'] = ''.join(info.xpath('./dl[2]/dd//text()').extract())
             item['article_lately'] = ''.join(info.xpath('./dl[3]/dd/a//text()').extract())
             time = info.xpath('./dl[3]/dd/span//text()').re_first('document.write\(timeConvert\(\'(.*?)\'\)\)')
             if time:
                 d_time = datetime.datetime.fromtimestamp(int(time))
                 s_time = d_time.strftime("%Y-%m-%d %H:%M:%S")
             item['time'] = s_time if time else None
-
             yield item
 
         if page < 20:

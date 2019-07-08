@@ -23,7 +23,10 @@ if __name__ == '__main__':
     driver.get(url)
     driver.find_element_by_id("query").send_keys("python")
     driver.find_element_by_xpath("//input[@value='搜公众号']").click()
-    element = driver.find_element_by_xpath("//a[@uigs='account_name_0']").click()
+    # element = driver.find_element_by_xpath("//a[@uigs='account_name_0']").click()
+    element = driver.find_element_by_xpath("//div[@class='txt-box']/p/a")
+    for e in element:
+        e.click()
     time.sleep(1)
     base_handle = driver.current_window_handle
     for handle in driver.window_handles:
