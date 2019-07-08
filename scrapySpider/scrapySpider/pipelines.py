@@ -15,7 +15,6 @@ class JsonWriterPipeline(object):
         self.exporter.start_exporting()
 
     def close_spider(self, spider):
-        print("==========关闭 json 文件===========")
         self.exporter.finish_exporting()
         self.file.close()
 

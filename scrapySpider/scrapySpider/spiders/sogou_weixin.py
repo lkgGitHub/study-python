@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import logging
-from ..items import ArticleItem, AccountItem
 import datetime
+from ..items import ArticleItem, AccountItem
 
 
 class SogouWeixinSpider(scrapy.Spider):
@@ -20,16 +20,16 @@ class SogouWeixinSpider(scrapy.Spider):
         word = input('please input the word for search:')
         page = int(input('please input the start_page:'))
         # 文章类抓取链接
-        # yield scrapy.Request(url=self.page_article_url.format(word=word,page=page),callback=self.article_parse,meta={'page':page,'word':word,'retry_times':True},dont_filter=True)
+        # yield scrapy.Request(url=self.page_article_url.format(word=word, page=page), callback=self.article_parse,
+        #                      meta={'page': page, 'word': word, 'retry_times': True}, dont_filter=True)
         # 公众号账号抓取链接
         yield scrapy.Request(url=self.page_account_url.format(word=word, page=page), callback=self.account_parse,
                              meta={'page': page, 'word': word, 'retry_times': True}, dont_filter=True)
 
-    '''
-        文章抓取parse
-    '''
-
     def article_parse(self, response):
+        """
+           文章抓取parse
+        """
         # from scrapy.shell import inspect_response
         # inspect_response(response, self)
         cookies = response.request.cookies
@@ -58,11 +58,10 @@ class SogouWeixinSpider(scrapy.Spider):
             yield scrapy.Request(url=self.page_article_url.format(word=word, page=page), callback=self.article_parse,
                                  cookies=cookies, meta={'page': page, 'word': word, 'proxy': proxy}, dont_filter=True)
 
-    '''
-        账号抓取parse
-    '''
-
     def account_parse(self, response):
+        """
+               账号抓取parse
+        """
         cookies = response.request.cookies
         word = response.meta.get('word')
         page = response.meta.get('page')
