@@ -29,8 +29,8 @@ DOWNLOAD_DELAY = 3  # 两次请求间的延迟
 CONCURRENT_REQUESTS_PER_DOMAIN = 1  # 一个域名一个线程爬虫
 # CONCURRENT_REQUESTS_PER_IP = 16
 
-# Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
+# 是否启用cookie中间件(默认启动）
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
@@ -49,9 +49,11 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 1  # 一个域名一个线程爬虫
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'scrapySpider.middlewares.ScrapyspiderDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+   'scrapySpider.middlewares.UserAgentMiddleware': 544,
+   # 'scrapySpider.middlewares.ProxyMiddleware': 811,
+   'scrapySpider.middlewares.CodeMiddleware': 812,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -61,11 +63,10 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 1  # 一个域名一个线程爬虫
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'scrapySpider.pipelines.CsvPipeline': 300,
-   'scrapySpider.pipelines.JsonWriterPipeline': 300,
-
-}
+# ITEM_PIPELINES = {
+#    'scrapySpider.pipelines.CsvPipeline': 300,
+#    'scrapySpider.pipelines.JsonWriterPipeline': 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -87,3 +88,7 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 自定义配置
+COOKIES_FILE_PATH = 'cookies.json'
+chromedriver_path = '/Users/mac/software/chromedriver'

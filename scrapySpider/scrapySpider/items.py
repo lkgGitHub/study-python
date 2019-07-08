@@ -15,3 +15,22 @@ class NewsItem(scrapy.Item):
     author = scrapy.Field()  # 作者
     remark = scrapy.Field()  # 备注
     public_time = scrapy.Field()  # 发布日期
+
+
+class ArticleItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    title = scrapy.Field()
+    weixin_name = scrapy.Field()
+    time = scrapy.Field()
+    content = scrapy.Field()
+    url = scrapy.Field()
+
+
+class AccountItem(scrapy.Item):
+    name = scrapy.Field()
+    account = scrapy.Field()
+    recommend = scrapy.Field()
+    Authentication = scrapy.Field()
+    article_lately = scrapy.Field()
+    time = scrapy.Field()
