@@ -28,7 +28,7 @@ class ArticleItem(scrapy.Item):
 class AccountItem(scrapy.Item):
     name = scrapy.Field()  # 微信名
     account = scrapy.Field()  # 微信号
-    recommend = scrapy.Field()  # 功能介绍
-    authentication = scrapy.Field()  # 微信认证
-    article_lately = scrapy.Field()  # 最近文章：
-    time = scrapy.Field()
+    # recommend = scrapy.Field()  # 功能介绍
+    # authentication = scrapy.Field()  # 微信认证
+    # article_lately = scrapy.Field()  # 最近文章：
+    # time = scrapy.Field()

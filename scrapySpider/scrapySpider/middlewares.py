@@ -377,20 +377,3 @@ class CodeMiddleware(object):
         else:
             self.logger.debug('[+] 200 Continue.......')
             return response
-
-
-class SeleniumDownloaderMiddleware(object):
-    def __init__(self):
-        self.browser = webdriver.Chrome(executable_path=chromedriver_path)
-
-    def process_request(self, request, spider):
-        if 'weixin.sogou.com' not in request.url:
-            return None
-        self.browser.get(request.url)
-        # 强制等待 2 秒
-        time.sleep(2)
-        element = self.browser.find_element_by_xpath("//a[@uigs='account_name_0']").click()
-
-
-
-

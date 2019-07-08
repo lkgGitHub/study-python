@@ -24,7 +24,7 @@ class SogouWeixinSpider(scrapy.Spider):
         # word = input('please input the word for search:')
         # page = int(input('please input the start_page:'))
         word = '石油'
-        page = '1'
+        page = 1
         # 文章类抓取链接
         # yield scrapy.Request(url=self.page_article_url.format(word=word, page=page), callback=self.article_parse,
         #                      meta={'page': page, 'word': word, 'retry_times': True}, dont_filter=True)
@@ -77,14 +77,14 @@ class SogouWeixinSpider(scrapy.Spider):
             item = AccountItem()
             item['name'] = ''.join(info.xpath('./div//a//text()').extract())
             item['account'] = info.xpath('./div//label[@name="em_weixinhao"]/text()').extract_first()
-            item['recommend'] = ''.join(info.xpath('./dl[1]/dd//text()').extract())
-            item['authentication'] = ''.join(info.xpath('./dl[2]/dd//text()').extract())
-            item['article_lately'] = ''.join(info.xpath('./dl[3]/dd/a//text()').extract())
+            # item['recommend'] = ''.join(info.xpath('./dl[1]/dd//text()').extract())
+            # item['authentication'] = ''.join(info.xpath('./dl[2]/dd//text()').extract())
+            # item['article_lately'] = ''.join(info.xpath('./dl[3]/dd/a//text()').extract())
             time = info.xpath('./dl[3]/dd/span//text()').re_first('document.write\(timeConvert\(\'(.*?)\'\)\)')
             if time:
                 d_time = datetime.datetime.fromtimestamp(int(time))
                 s_time = d_time.strftime("%Y-%m-%d %H:%M:%S")
-            item['time'] = s_time if time else None
+            # item['time'] = s_time if time else None
             yield item
 
         if page < 20:
