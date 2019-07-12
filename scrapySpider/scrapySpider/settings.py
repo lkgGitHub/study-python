@@ -47,13 +47,12 @@ COOKIES_ENABLED = True
 #    'scrapySpider.middlewares.ScrapyspiderSpiderMiddleware': 543,
 # }
 
-# Enable or disable downloader middlewares
-# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-   'scrapySpider.middlewares.UserAgentMiddleware': 544,
-   # 'scrapySpider.middlewares.ProxyMiddleware': 811,
-   'scrapySpider.middlewares.CodeMiddleware': 812,
-}
+# 下载中间件（downloader middlewares） 【https://doc.scrapy.org/en/latest/topics/downloader-middleware.html】
+# DOWNLOADER_MIDDLEWARES = {
+#    'scrapySpider.middlewares.UserAgentMiddleware': 544,
+#    # 'scrapySpider.middlewares.ProxyMiddleware': 811,
+#    'scrapySpider.middlewares.CodeMiddleware': 812,
+# }
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -91,4 +90,5 @@ DOWNLOADER_MIDDLEWARES = {
 
 # 自定义配置
 COOKIES_FILE_PATH = 'cookies.json'
-chromedriver_path = '/Users/mac/software/chromedriver'
+# chromedriver_path = '/Users/mac/software/chromedriver'
+chromedriver_path = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver'

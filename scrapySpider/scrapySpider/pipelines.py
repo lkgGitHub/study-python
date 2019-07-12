@@ -28,7 +28,7 @@ class CsvPipeline(object):
 
     def __init__(self):
         self.file = open('news.csv', 'wb')
-        self.csv = CsvItemExporter(self.file, encoding = 'utf-8')
+        self.csv = CsvItemExporter(self.file, encoding='utf-8')
         self.csv.start_exporting()
 
     def process_item(self, item, spider):
