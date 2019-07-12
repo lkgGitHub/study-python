@@ -12,7 +12,16 @@ base_url = "http://www.ftchinese.com"
 class FtchineseSpider(scrapy.Spider):
     name = 'ftchinese'
     allowed_domains = ['ftchinese.com']
-    start_urls = ['http://www.ftchinese.com']
+    start_urls = [
+        'http://www.ftchinese.com',  # 首页
+        'http://www.ftchinese.com/channel/china.html',  # 中国
+        'http://www.ftchinese.com/channel/world.html',  # 全球
+        'http://www.ftchinese.com/channel/economy.html',  # 经济
+        'http://www.ftchinese.com/channel/markets.html',  # 全球市场
+        'http://www.ftchinese.com/channel/business.html',  # 商业
+        'http://www.ftchinese.com/channel/innovation.html',  # 创新经济
+        'http://www.ftchinese.com/channel/opinion.html',  # 观点
+    ]
 
     def parse(self, response):
         for each in response.xpath('//a[contains(@href, "/story/")]/@href'):
