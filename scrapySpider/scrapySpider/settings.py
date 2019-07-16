@@ -41,16 +41,16 @@ COOKIES_ENABLED = True
 #   'Accept-Language': 'en',
 # }
 
-# Enable or disable spider middlewares
-# See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+# 爬虫中间件（Spider Middleware）【https://doc.scrapy.org/en/latest/topics/spider-middleware.html】
 # SPIDER_MIDDLEWARES = {
 #    'scrapySpider.middlewares.ScrapyspiderSpiderMiddleware': 543,
 # }
 
-# 下载中间件（downloader middlewares） 【https://doc.scrapy.org/en/latest/topics/downloader-middleware.html】
+# 下载中间件（downloader middlewares）【https://doc.scrapy.org/en/latest/topics/downloader-middleware.html】
+# 作用：更换代理IP，更换Cookies，更换User-Agent，自动重试。。数字越小的中间件越先执行
 # DOWNLOADER_MIDDLEWARES = {
 #    'scrapySpider.middlewares.UserAgentMiddleware': 544,
-#    # 'scrapySpider.middlewares.ProxyMiddleware': 811,
+#    'scrapySpider.middlewares.ProxyMiddleware': 811, # 代理中间件
 #    'scrapySpider.middlewares.CodeMiddleware': 812,
 # }
 
