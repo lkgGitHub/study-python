@@ -12,7 +12,8 @@ make MALLOC=libc
 # 修改配置文件redis.conf，启动
 src/redis-server redis.conf
 ```
-## RedisBloom 安装
+## RedisBloom 安装 
+参考https://juejin.im/post/5cfd060ee51d4556f76e8067#heading-10
 ```shell
 # branch参数指定克隆的tag。
 git clone --branch v2.0.2 https://github.com/RedisBloom/RedisBloom.git 
