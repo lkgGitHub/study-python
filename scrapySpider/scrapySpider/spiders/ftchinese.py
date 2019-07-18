@@ -26,14 +26,14 @@ class FtchineseSpider(scrapy.Spider):
     name = 'ftchinese'
     allowed_domains = ['ftchinese.com']
     start_urls = [
-        # 'http://www.ftchinese.com',  # 首页
+        'http://www.ftchinese.com',  # 首页
         'http://www.ftchinese.com/channel/china.html',  # 中国
-        # 'http://www.ftchinese.com/channel/world.html',  # 全球
-        # 'http://www.ftchinese.com/channel/economy.html',  # 经济
-        # 'http://www.ftchinese.com/channel/markets.html',  # 全球市场
-        # 'http://www.ftchinese.com/channel/business.html',  # 商业
-        # 'http://www.ftchinese.com/channel/innovation.html',  # 创新经济
-        # 'http://www.ftchinese.com/channel/opinion.html',  # 观点
+        'http://www.ftchinese.com/channel/world.html',  # 全球
+        'http://www.ftchinese.com/channel/economy.html',  # 经济
+        'http://www.ftchinese.com/channel/markets.html',  # 全球市场
+        'http://www.ftchinese.com/channel/business.html',  # 商业
+        'http://www.ftchinese.com/channel/innovation.html',  # 创新经济
+        'http://www.ftchinese.com/channel/opinion.html',  # 观点
     ]
 
     def parse(self, response):
@@ -47,16 +47,21 @@ class FtchineseSpider(scrapy.Spider):
         time.sleep(random.uniform(1, 2))
         title = response.xpath("//h1[contains(@class, 'story-headline')]/text()").extract_first()
         summary = response.xpath("//div[@class='story-lead']/text()").extract_first()
-        public_time = response.xpath("//span[@class='story-time']/text()").extract_first()
         authors = response.xpath("//span[@class='story-author']//text()").extract()
         contents = response.xpath("//div[@id='story-body-container']/p/text()").extract()
+        remark = ""
         try:
             remark = "主题:" + response.xpath("//div[@class='story-theme']/a/text()").extract_first()
         except TypeError as e:
-            print("=="*30)
-            print(response.xpath("//div[@class='story-theme']/a/text()").extract_first())
             logging.error(e)
-            print("==" * 30)
+
+        public_time = ""
+        try:
+            public_time = response.xpath("//span[@class='story-time']/text()").extract_first()
+            public_time = public_time.replace("年", "-").replace("月", "-").replace("日", "")
+        except (TypeError, AttributeError) as e:
+            logging.error(e)
+
         content = author = ""
         for p in contents:
             content += p
