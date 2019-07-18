@@ -32,6 +32,7 @@ headers = {
 class YicaiSpider(scrapy.Spider):
     name = 'yicai'
     allowed_domains = ['yicai.com']
+    count = 0
 
     def start_requests(self):
         total_page = 1
@@ -63,8 +64,9 @@ class YicaiSpider(scrapy.Spider):
             else:
                 print(url)
 
-    @staticmethod
-    def parse_item(response):
+    def parse_item(self, response):
+        self.count += 1
+        print("yicai:", "=" * 20, self.count, "=" * 20)
         # time.sleep(random.uniform(1, 2))
         news_item = NewsItem()
         news_item['source'] = "yicai"

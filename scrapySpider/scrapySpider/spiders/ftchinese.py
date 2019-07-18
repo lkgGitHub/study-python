@@ -25,6 +25,7 @@ headers = {
 class FtchineseSpider(scrapy.Spider):
     name = 'ftchinese'
     allowed_domains = ['ftchinese.com']
+    count = 0
     start_urls = [
         'http://www.ftchinese.com',  # 首页
         'http://www.ftchinese.com/channel/china.html',  # 中国
@@ -42,8 +43,9 @@ class FtchineseSpider(scrapy.Spider):
             headers['Referer'] = base_url + each.extract()
             yield Request(url, headers=headers, callback=self.parse_item)
 
-    @staticmethod
-    def parse_item(response):
+    def parse_item(self, response):
+        self.count += 1
+        print("ftchinese:", "=" * 20, self.count, "=" * 20)
         time.sleep(random.uniform(1, 2))
         title = response.xpath("//h1[contains(@class, 'story-headline')]/text()").extract_first()
         summary = response.xpath("//div[@class='story-lead']/text()").extract_first()

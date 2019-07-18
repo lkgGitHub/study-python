@@ -17,8 +17,7 @@ class IfengSpider(scrapy.Spider):
     count = 0
 
     # def start_requests(self):
-    #     yield Request("https://finance.ifeng.com/c/7oPgcal6IGO", callback=self.parse_item)
-    # yield Request("https://finance.ifeng.com/c/7nT41fvhqFs", callback=self.parse_item)
+    #     yield Request("https://finance.ifeng.com/c/7oM5VullK40", callback=self.parse_item)
 
     def parse(self, response):
         a = response.xpath("//a[contains(@href, 'https://finance.ifeng.com/c')]/@href").extract()
@@ -42,7 +41,7 @@ class IfengSpider(scrapy.Spider):
 
     def parse_item(self, response):
         self.count += 1
-        print("=" * 20, self.count, "=" * 20)
+        print("ifeng:", "=" * 20, self.count, "=" * 20)
         news = NewsItem()
         news["url"] = response.url
         news["source"] = "ifeng"
