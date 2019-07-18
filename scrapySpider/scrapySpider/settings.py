@@ -6,6 +6,10 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+# url 去重
+# 去重过滤类
+DUPEFILTER_CLASS = 'scrapySpider.filter.RedisBloomFilter'
+LOG_LEVEL = 'INFO'  # CRITICAL, ERROR, WARNING, INFO, DEBUG
 
 BOT_NAME = 'scrapySpider'
 
@@ -35,7 +39,7 @@ COOKIES_ENABLED = True
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
-# Override the default request headers:
+# 重写请求headers （Override the default request headers）
 # DEFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
@@ -54,8 +58,7 @@ COOKIES_ENABLED = True
 #    'scrapySpider.middlewares.CodeMiddleware': 812,
 # }
 
-# Enable or disable extensions
-# See https://doc.scrapy.org/en/latest/topics/extensions.html
+#  扩展(extensions) 【https://doc.scrapy.org/en/latest/topics/extensions.html】
 # EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 # }
