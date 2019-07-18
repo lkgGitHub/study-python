@@ -37,7 +37,7 @@ class YicaiSpider(scrapy.Spider):
         page_size = 25
         for page in range(1, total_page + 1):
             yield Request(url="https://www.yicai.com/api/ajax/getlatest?page={}&pagesize={}".format(page, page_size),
-                          headers=headers)
+                          headers=headers, dont_filter=True)
 
     def parse(self, response):
         headers["cache-control"] = "cache-control"
