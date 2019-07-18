@@ -12,6 +12,9 @@ class NewsItem(scrapy.Item):
     title = scrapy.Field()  # 标题
     content = scrapy.Field()  # 内容
     summary = scrapy.Field()  # 摘要
+    keywords = scrapy.Field()  # 关键字
+    source = scrapy.Field()  # 来源
+    url = scrapy.Field()  # 原url
     author = scrapy.Field()  # 作者
     remark = scrapy.Field()  # 备注
     public_time = scrapy.Field()  # 发布日期

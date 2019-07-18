@@ -35,7 +35,7 @@ class YicaiSpider(scrapy.Spider):
 
     def start_requests(self):
         total_page = 1
-        page_size = 5
+        page_size = 25
         for page in range(1, total_page + 1):
             yield Request(url="https://www.yicai.com/api/ajax/getlatest?page={}&pagesize={}".format(page, page_size),
                           headers=headers, dont_filter=True)  # dont_filter=True 为不过滤url
@@ -56,7 +56,7 @@ class YicaiSpider(scrapy.Spider):
                                   "author": news.get("NewsAuthor") + " " + news.get("CreaterName"),
                                   "pubDate": news.get("pubDate"),
                                   "NewsNotes": news.get("NewsNotes"),
-                                  "remark": "频道:{};来源:{};".format(news.get("ChannelName"), news.get("NewsSource"))
+                                  "remark": "频道:{}; 来源:{};".format(news.get("ChannelName"), news.get("NewsSource"))
                               })  # meta={}：请求之间传递参数，即在Request 之间传递参数
             elif "video" in url:
                 print(url)
@@ -65,14 +65,16 @@ class YicaiSpider(scrapy.Spider):
 
     @staticmethod
     def parse_item(response):
-        time.sleep(random.uniform(1, 2))
+        # time.sleep(random.uniform(1, 2))
         news_item = NewsItem()
+        news_item['source'] = "yicai"
+        news_item['url'] = response.url
         news_item['title'] = response.meta["NewsTitle"]
         news_item['public_time'] = response.meta["pubDate"]
         news_item['author'] = response.meta["author"]
         news_item['summary'] = response.meta["NewsNotes"]
-        keywords = response.xpath("//meta[@name='keywords']/@content").extract_first()
-        news_item["remark"] = response.meta["remark"] + "关键字:{}".format(keywords)
+        news_item["remark"] = response.meta["remark"]
+        news_item["keywords"] = response.xpath("//meta[@name='keywords']/@content").extract_first()
         response.xpath("//div[@class_='m-txt']")
         contents = response.xpath("//div[@class='m-txt']/p/text()")
         content = ""

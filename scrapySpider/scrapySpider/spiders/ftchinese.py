@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 import time
+import logging
 import scrapy
 
 from scrapy import Request
@@ -46,10 +47,16 @@ class FtchineseSpider(scrapy.Spider):
         time.sleep(random.uniform(1, 2))
         title = response.xpath("//h1[contains(@class, 'story-headline')]/text()").extract_first()
         summary = response.xpath("//div[@class='story-lead']/text()").extract_first()
-        remark = response.xpath("//div[@class='story-theme']/a/text()").extract_first()
         public_time = response.xpath("//span[@class='story-time']/text()").extract_first()
         authors = response.xpath("//span[@class='story-author']//text()").extract()
         contents = response.xpath("//div[@id='story-body-container']/p/text()").extract()
+        try:
+            remark = "主题:" + response.xpath("//div[@class='story-theme']/a/text()").extract_first()
+        except TypeError as e:
+            print("=="*30)
+            print(response.xpath("//div[@class='story-theme']/a/text()").extract_first())
+            logging.error(e)
+            print("==" * 30)
         content = author = ""
         for p in contents:
             content += p
@@ -59,7 +66,7 @@ class FtchineseSpider(scrapy.Spider):
         if "更新于" in public_time:
             public_time = public_time[3:]
         news = NewsItem(title=title, author=author, summary=summary, content=content, public_time=public_time,
-                        remark=remark)
+                        remark=remark, source="ftchinese", url=response.url)
         yield news
 
     # import re

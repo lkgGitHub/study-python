@@ -6,10 +6,10 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-# url 去重
-# 去重过滤类
-DUPEFILTER_CLASS = 'scrapySpider.filter.RedisBloomFilter'
+
 LOG_LEVEL = 'INFO'  # CRITICAL, ERROR, WARNING, INFO, DEBUG
+# url 去重过滤类
+# DUPEFILTER_CLASS = 'scrapySpider.filter.RedisBloomFilter'
 
 BOT_NAME = 'scrapySpider'
 
