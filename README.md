@@ -18,3 +18,4 @@ FT中文网：http://www.ftchinese.com/
 第一财经: yicai
 FT中文网: ftchinese
 凤凰网: ifeng
+网易财经: wangyi

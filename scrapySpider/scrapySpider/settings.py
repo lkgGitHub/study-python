@@ -18,7 +18,7 @@ SPIDER_MODULES = ['scrapySpider.spiders']
 NEWSPIDER_MODULE = 'scrapySpider.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'scrapySpider (+http://www.yourdomain.com)'
+USER_AGENT = 'scrapySpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -26,13 +26,14 @@ ROBOTSTXT_OBEY = False
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
 
-# Configure a delay for requests for the same website (default: 0)
-# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
-# See also autothrottle settings and docs
-DOWNLOAD_DELAY = 3  # 两次请求间的延迟
-# The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 1  # 一个域名一个线程爬虫
-# CONCURRENT_REQUESTS_PER_IP = 16
+# 下载器在下载同一个网站下一个页面前需要等待的时间。该选项可以用来限制爬取速度。同时也支持小数。默认：0
+DOWNLOAD_DELAY = 0
+
+# 对单个网站进行并发请求的最大值,默认为8:
+CONCURRENT_REQUESTS_PER_DOMAIN = 8
+
+# 下载器超时时间(单位: 秒)。
+DOWNLOAD_TIMEOUT = 10
 
 # 是否启用cookie中间件(默认启动）
 COOKIES_ENABLED = True
@@ -54,9 +55,9 @@ COOKIES_ENABLED = True
 # 下载中间件（downloader middlewares）【https://doc.scrapy.org/en/latest/topics/downloader-middleware.html】
 # 作用：更换代理IP，更换Cookies，更换User-Agent，自动重试。。数字越小的中间件越先执行
 # DOWNLOADER_MIDDLEWARES = {
-#    'scrapySpider.middlewares.UserAgentMiddleware': 544,
-#    'scrapySpider.middlewares.ProxyMiddleware': 811, # 代理中间件
-#    'scrapySpider.middlewares.CodeMiddleware': 812,
+#    # 'scrapySpider.middlewares.UserAgentMiddleware': 544,
+#    'scrapySpider.middlewares.ProxyMiddleware': 811  # 代理中间件
+#    # 'scrapySpider.middlewares.CodeMiddleware': 812,
 # }
 
 #  扩展(extensions) 【https://doc.scrapy.org/en/latest/topics/extensions.html】
