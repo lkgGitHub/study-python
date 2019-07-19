@@ -10,7 +10,8 @@
 LOG_LEVEL = 'INFO'  # CRITICAL, ERROR, WARNING, INFO, DEBUG
 # url 去重过滤类
 # DUPEFILTER_CLASS = 'scrapySpider.filter.RedisBloomFilter'
-
+# 爬取网站最大允许的深度(depth)值。如果为0，则没有限制。（默认: 0）
+DEPTH_LIMIT = 5
 BOT_NAME = 'scrapySpider'
 
 SPIDER_MODULES = ['scrapySpider.spiders']
