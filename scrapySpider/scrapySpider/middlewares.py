@@ -7,6 +7,7 @@ import logging
 import json
 import time
 from scrapy import signals
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -112,75 +113,34 @@ class ScrapyspiderDownloaderMiddleware(object):
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-class UserAgentMiddleware(object):
-    """
-        header中间件
-    """
-    def __init__(self):
-        self.User_Agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
-        self.Referer = 'https://open.weixin.qq.com/connect/qrconnect?appid=wx6634d697e8cc0a29&scope=snsapi_login&response_type=code&redirect_uri=https%3A%2F%2Faccount.sogou.com%2Fconnect%2Fcallback%2Fweixin&state=616e9ff5-2b7d-439b-9b49-ebf307f6aa56&href=https%3A%2F%2Fdlweb.sogoucdn.com%2Fweixin%2Fcss%2Fweixin_join.min.css%3Fv%3D20170315'
-        self.Host = 'weixin.sogou.com'
-        self.Connection = 'keep-alive'
-        self.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-
-    def process_request(self, spider, request):
-        print('[+] using headers!')
-        request.headers['User-Agent'] = self.User_Agent
-        request.headers['Referer'] = self.Referer
-        request.headers['Host'] = self.Host
-        request.headers['Connection'] = self.Connection
-        request.headers['Accept'] = self.Accept
-        request.headers['Upgrade-Insecure-Requests'] = 1
-        request.headers['Accept-Encoding'] = 'gzip, deflate, br'
-        request.headers['Accept-Language'] = 'zh-CN,zh;q=0.9'
+# class UserAgentMiddleware2(UserAgentMiddleware):
 
 
 class ProxyMiddleware(object):
-    """
-        代理池中间件
-        process_request方法判断Request对象是否带有retry_time
-        如果有，则修改proxy
-        process_response判断是否302
-        如果是，则切换proxy
-    """
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(
-            proxy_url=crawler.settings.get('PROXY_URL')
-        )
-
-    def __init__(self, proxy_url):
-        self.logger = logging.getLogger(__name__)
-        self.proxy_url = proxy_url
-
-    def get_random(self):
-        try:
-            response = requests.get(self.proxy_url)
-            if response.status_code == 200:
-                proxy = response.text
-                print('[+] ' + proxy)
-                return proxy
-        except:
-            return False
+    """代理中间件"""
 
     def process_request(self, request, spider):
-        self.logger.debug('[+] retry_times: %s' % request.meta.get('retry_times'))
-        if request.meta.get('retry_times'):
-            proxy = self.get_random()
-
-            if proxy:
-                url = 'http://' + proxy
-                self.logger.debug('[+] using proxy: %s' % proxy)
-                request.meta['proxy'] = url
-
-    def process_response(self, request, response, spider):
-        if response.status == 302:
-            self.logger.debug('[+] 302 try again and change proxy.....')
-            request.meta['retry_times'] = True
-            # print(request.meta.get('retry_times'))
-            return request
-        return response
+        boo = False
+        proxy = ""
+        for i in range(10):
+            p = requests.get("http://127.0.0.1:5010/get/").content
+            if isinstance(p, bytes):
+                p = p.decode('utf8')
+            proxy = "http://{proxy}".format(proxy=p)
+            try:
+                r = requests.get('http://httpbin.org/ip', proxies={"http": proxy}, timeout=3, verify=False)
+                if r.status_code == 200 and r.json().get("origin"):
+                    boo = True
+                    break
+                else:
+                    requests.get("http://127.0.0.1:5010/delete/?proxy={}".format(proxy))
+            except Exception as e:
+                print(e)
+                print("代理ip失败:{}".format(proxy))
+                requests.get("http://127.0.0.1:5010/delete/?proxy={}".format(proxy))
+        if boo:
+            print(proxy)
+            request.meta['proxy'] = proxy
 
 
 class CodeMiddleware(object):
