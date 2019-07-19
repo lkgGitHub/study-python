@@ -47,6 +47,7 @@ class FtchineseSpider(scrapy.Spider):
         self.count += 1
         print("ftchinese:", "=" * 20, self.count, "=" * 20)
         time.sleep(random.uniform(1, 2))
+        # extract()方法返回的都是unicode字符串
         title = response.xpath("//h1[contains(@class, 'story-headline')]/text()").extract_first()
         summary = response.xpath("//div[@class='story-lead']/text()").extract_first()
         authors = response.xpath("//span[@class='story-author']//text()").extract()
