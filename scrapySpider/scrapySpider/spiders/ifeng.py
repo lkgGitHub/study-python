@@ -10,18 +10,21 @@ from ..items import NewsItem
 
 
 class IfengSpider(scrapy.Spider):
+    """凤凰网爬虫：http://finance.ifeng.com/"""
     name = 'ifeng'
     allowed_domains = ['finance.ifeng.com']
-    start_urls = ['https://finance.ifeng.com/']
-    # start_urls = ['https://finance.ifeng.com/c/special/7oPi2y5Dzbk']
     count = 0
 
-    # def start_requests(self):
-    #     yield Request("https://finance.ifeng.com/c/7oM5VullK40", callback=self.parse_item)
+    def start_requests(self):
+        yield Request("https://finance.ifeng.com/", callback=self.parse, dont_filter=True)   # 财经首页
+        yield Request("https://finance.ifeng.com/stock/", callback=self.parse, dont_filter=True)  # 股票首页
+        yield Request("https://finance.ifeng.com/ipo/", callback=self.parse, dont_filter=True)  # 新股
+        yield Request("https://finance.ifeng.com/stock/gstzgc/", callback=self.parse, dont_filter=True)  # 投资观察
+        yield Request("https://finance.ifeng.com/money/", callback=self.parse, dont_filter=True)  # 理财
 
     def parse(self, response):
         a = response.xpath("//a[contains(@href, 'https://finance.ifeng.com/c')]/@href").extract()
-        print("==" * 15, len(a))
+        print("=="*10, ">", len(a))
         for url in a:
             if "#_wth_cs" in url:
                 pass
