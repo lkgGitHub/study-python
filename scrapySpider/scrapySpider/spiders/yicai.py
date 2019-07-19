@@ -78,10 +78,10 @@ class YicaiSpider(scrapy.Spider):
         news_item["remark"] = response.meta["remark"]
         news_item["keywords"] = response.xpath("//meta[@name='keywords']/@content").extract_first()
         response.xpath("//div[@class_='m-txt']")
-        contents = response.xpath("//div[@class='m-txt']/p/text()")
+        contents = response.xpath("//div[@class='m-txt']/p").xpath('string(.)').extract()
         content = ""
         for c in contents:
-            content = content + c.extract()
+            content += c.replace(" ", "").replace('\n', '').replace('\r', '')
         news_item["content"] = content
         yield news_item
 

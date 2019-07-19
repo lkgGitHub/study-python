@@ -50,8 +50,6 @@ class FtchineseSpider(scrapy.Spider):
         # extract()方法返回的都是unicode字符串
         title = response.xpath("//h1[contains(@class, 'story-headline')]/text()").extract_first()
         summary = response.xpath("//div[@class='story-lead']/text()").extract_first()
-        authors = response.xpath("//span[@class='story-author']//text()").extract()
-        contents = response.xpath("//div[@id='story-body-container']/p/text()").extract()
         remark = ""
         try:
             remark = "主题:" + response.xpath("//div[@class='story-theme']/a/text()").extract_first()
@@ -66,13 +64,15 @@ class FtchineseSpider(scrapy.Spider):
             logging.error(e)
 
         content = author = ""
-        for p in contents:
-            content += p
+        authors = response.xpath("//span[@class='story-author']//text()").extract()
         for a in authors:
             if len(a.strip()):
                 author += a + " "
         if "更新于" in public_time:
             public_time = public_time[3:]
+        contents = response.xpath("//div[@id='story-body-container']/p").xpath('string(.)').extract()
+        for p in contents:
+            content += p.replace(" ", "").replace('\n', '').replace('\r', '')
         news = NewsItem(title=title, author=author, summary=summary, content=content, public_time=public_time,
                         remark=remark, source="ftchinese", url=response.url)
         yield news

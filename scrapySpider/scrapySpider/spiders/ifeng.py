@@ -65,7 +65,7 @@ class IfengSpider(scrapy.Spider):
                     if "text" == c.get("type"):
                         soup = BeautifulSoup(c.get("data"), 'lxml')
                         for p in soup.findAll('p'):
-                            content += p.text
+                            content += p.text.replace(" ", "").replace('\n', '').replace('\r', '')
                 print("url:", response.url)
                 print("title:", news["title"])
                 # print("content:", content)
