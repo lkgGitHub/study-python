@@ -1,5 +1,5 @@
 .idea/
 *.pyc
 *.log
-scrapySpider/news.csv
-scrapySpider/cookies.json
+*.csv
+scrapySpider/*.json
