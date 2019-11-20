@@ -7,7 +7,7 @@ url = "https://raw.githubusercontent.com/Alvin9999/pac2/master/ssconfig.txt"
 url2 = "https://coding.net/u/Alvin9999/p/ip/git/raw/master/ssconfig.txt"
 
 if __name__ == '__main__':
-    response = requests.get(url)
+    response = requests.get(url2)
     b = base64.b64decode(response.text)
     s = b.decode()
     server_pattern = re.compile(r"(?:[0-9]{1,3}\.){3}[0-9]{1,3}")
