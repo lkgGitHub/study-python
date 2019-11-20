@@ -5,3 +5,6 @@
 scrapySpider/*.json
 textCNN_pytorch-master/
 堡垒机日志/日志样例.xlsx
+图像处理/data/
+图像处理/outpath/
+图像处理/template/
