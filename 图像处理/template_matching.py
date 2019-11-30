@@ -38,16 +38,16 @@ def matchTemplate(file_type, threshold, template_paths):
 if __name__ == '__main__':
     file_types = ['del_file', 'add_user', 'chrome', 'modify_path', 'remote_connection', 'remote_desktop_connection']  #
     matchTemplate('del_file', 0.9, ['del_file'])
-    matchTemplate('modify_path', 0.9, ['modify_path'])
-    matchTemplate('add_user', 0.9, ['add_user'])
-    matchTemplate('remote_desktop_connection', 0.9, ['remote_desktop_connection'])
-    matchTemplate('chrome', 0.9, ['chrome'])
-    matchTemplate('remote_connection', 0.9, ['remote_connection'])
-    matchTemplate('create_file', 0.9, ['create_file'])
-    matchTemplate('into_system_disk', 0.9, ['into_system_disk'])
-    matchTemplate('login_bastion', 0.9, ['login_bastion'])
-
-    matchTemplate('uninstall_app', 0.9, ['uninstall_app1', 'uninstall_app3', 'uninstall_app4'])
+    # matchTemplate('modify_path', 0.9, ['modify_path'])
+    # matchTemplate('add_user', 0.9, ['add_user'])
+    # matchTemplate('remote_desktop_connection', 0.9, ['remote_desktop_connection'])
+    # matchTemplate('chrome', 0.9, ['chrome'])
+    # matchTemplate('remote_connection', 0.9, ['remote_connection'])
+    # matchTemplate('create_file', 0.9, ['create_file'])
+    # matchTemplate('into_system_disk', 0.9, ['into_system_disk'])
+    # matchTemplate('login_bastion', 0.9, ['login_bastion'])
+    #
+    # matchTemplate('uninstall_app', 0.9, ['uninstall_app1', 'uninstall_app3', 'uninstall_app4'])
 
 # def matchTemplate(file_type, threshold):
 #     template = cv2.imread('template/{}.jpg'.format(file_type), 0)
