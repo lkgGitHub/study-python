@@ -12,11 +12,9 @@ if __name__ == '__main__':
     total_count = data.get('total_count')
     items = data.get('items')
     for item in items:
-        description = item.get('description')
         html_url = item.get('html_url')
+        description = item.get('description')
         updated_at = item.get('updated_at')
-        print(description)
-        print(html_url)
-        print(updated_at)
+        # readme = requests.get(html_url+"/blob/master/README.md")
 
 
