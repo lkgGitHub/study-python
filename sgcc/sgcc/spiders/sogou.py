@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 import time
-from random import random
+import random
 import scrapy
 
 from ..items import AccountItem
@@ -20,7 +20,6 @@ base_headers = {
 
 
 class SogouSpider(scrapy.Spider):
-
     name = 'sogou'
     allowed_domains = ['weixin.sogou.com']
 
@@ -33,8 +32,8 @@ class SogouSpider(scrapy.Spider):
         account_headers["Sec-Fetch-Site"] = "same-origin"
         account_headers["Referer"] = "https://weixin.sogou.com/"
 
-        word = '国网'
-        for page in range(1, 2):
+        word = '国家电网'
+        for page in range(1, 3):
             time.sleep(random.uniform(3, 6))
             yield scrapy.Request(url=self.page_account_url.format(word=word, page=page), headers=account_headers,
                                  dont_filter=True, callback=self.parse)
