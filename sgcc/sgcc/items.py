@@ -12,3 +12,13 @@ class SgccItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+# 微信公众号
+class AccountItem(scrapy.Item):
+    name = scrapy.Field()  # 微信名
+    account = scrapy.Field()  # 微信号
+    introduction = scrapy.Field()  # 功能介绍
+    authentication = scrapy.Field()  # 微信认证
+    article_lately = scrapy.Field()  # 最近文章：
+    time = scrapy.Field()

@@ -14,49 +14,46 @@ BOT_NAME = 'sgcc'
 SPIDER_MODULES = ['sgcc.spiders']
 NEWSPIDER_MODULE = 'sgcc.spiders'
 
+LOG_LEVEL = 'DEBUG'  # CRITICAL, ERROR, WARNING, INFO, DEBUG
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'sgcc (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
 
-# Configure a delay for requests for the same website (default: 0)
-# See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
-# See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
-# The download delay setting will honor only one of:
-# CONCURRENT_REQUESTS_PER_DOMAIN = 16
+# 下载器在下载同一个网站下一个页面前需要等待的时间。该选项可以用来限制爬取速度。同时也支持小数。默认：0
+DOWNLOAD_DELAY = 0
+# 对单个网站进行并发请求的最大值,默认为8:
+CONCURRENT_REQUESTS_PER_DOMAIN = 8
 # CONCURRENT_REQUESTS_PER_IP = 16
 
-# Disable cookies (enabled by default)
+# 是否启用cookie中间件(默认启动）
 # COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
-# Override the default request headers:
+# 重写请求headers （Override the default request headers）
 # DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
 # }
 
-# Enable or disable spider middlewares
+# 爬虫中间件（Spider Middleware）【https://doc.scrapy.org/en/latest/topics/spider-middleware.html】
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
 #    'sgcc.middlewares.SgccSpiderMiddleware': 543,
 # }
 
-# Enable or disable downloader middlewares
-# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+# 下载中间件（downloader middlewares）【https://doc.scrapy.org/en/latest/topics/downloader-middleware.html】
+# 作用：更换代理IP，更换Cookies，更换User-Agent，自动重试。。数字越小的中间件越先执行
 # DOWNLOADER_MIDDLEWARES = {
 #    'sgcc.middlewares.SgccDownloaderMiddleware': 543,
 # }
 
-# Enable or disable extensions
-# See https://docs.scrapy.org/en/latest/topics/extensions.html
+# 扩展(extensions) 【https://doc.scrapy.org/en/latest/topics/extensions.html】
 # EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 # }

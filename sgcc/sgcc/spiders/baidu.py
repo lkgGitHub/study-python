@@ -31,6 +31,5 @@ class BaiduSpider(scrapy.Spider):
         yield Request(url, headers=headers, callback=self.parse)
 
     def parse(self, response):
-        print("aa"*10)
         print(response.text)
 
