@@ -37,8 +37,8 @@ def parse_news(story_url):
 if __name__ == '__main__':
     response = requests.get(base_url)
     soup = BeautifulSoup(response.text, "lxml")
-    soups = soup.find_all("a", class_=re.compile("item-headline-link"), href=re.compile(
-        "/story/"))  # 等价于：soups = soup.find_all("a", attrs={"class": re.compile("item-headline-link"), "href": re.compile("/story/")})
+    # 等价于：soups = soup.find_all("a", attrs={"class": re.compile("item-headline-link"), "href": re.compile("/story/")})
+    soups = soup.find_all("a", class_=re.compile("item-headline-link"), href=re.compile("/story/"))
     print(len(soups))
     # for s in soups:
     #     print(s)
