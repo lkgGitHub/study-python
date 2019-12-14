@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 import time
 import logging
 
@@ -36,17 +35,8 @@ class ChinaEnergySpider(scrapy.Spider):
             title = tags.find('div', attrs={'class': 'main4_left_m1_t'}).find_all('a')[1].get_text()
             publishTime = tags.find('div', attrs={'class': 'm2'}).find('span', attrs={'class': 'b2'}).get_text()
             urlhref = tags.find('div', attrs={'class': 'main4_left_m1_t'}).find_all('a')[1].get('href')
-            if urlhref.startswith("./"):
-                url = self.yq_url + urlhref[2:]
-            elif urlhref.startswith("../"):
-                url = self.base_url + urlhref[3:]
-            else:
-                print(urlhref)
-                continue
-            logging.info(title)
-            logging.info(url)
-            logging.info(publishTime)
-            yield Request(url, meta={'title': title, 'publishTime': publishTime, 'url': url}, callback=self.parse_news)
+            logging.info("title:{}, publishTime:{}".format(title, publishTime))
+            yield response.follow(urlhref, meta={'title': title, 'publishTime': publishTime}, callback=self.parse_news)
 
     def parse_news(self, response):
         logging.info("cnenergynews(中国能源网)--parse_news---")
@@ -54,7 +44,6 @@ class ChinaEnergySpider(scrapy.Spider):
         datetime1 = response.meta['publishTime']
         timeArray1 = time.strptime(datetime1, "%Y-%m-%d %H:%M")
         publishTime = int(time.mktime(timeArray1))
-        url = response.meta['url']
         data = response.body
         soup = BeautifulSoup(data, "lxml")
         tagsdiv = soup.find('div', attrs={'class': 'xlcontent'}).find_all('p')
@@ -63,10 +52,10 @@ class ChinaEnergySpider(scrapy.Spider):
             content += tagsp.get_text().strip()
         item = NewsItem()
         item['title'] = title
-        item['url'] = url
+        item['url'] = response.url
         item['publishTime'] = publishTime
         item['content'] = content
         item['htmlbody'] = base64.b64encode(data)
         item['siteName'] = '中国能源网'
         item['original'] = ''
-        yield item
+        # yield item
