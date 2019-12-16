@@ -8,16 +8,20 @@
 import scrapy
 
 
-class SgccItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
-
 class PanSouItem(scrapy.Item):
     title = scrapy.Field
     url = scrapy.Field
     time = scrapy.Field()  # 时间
+
+
+# app移动应用
+class AppItem(scrapy.Item):
+    name = scrapy.Field()  # 应用名称
+    size = scrapy.Field()  # 应用大小
+    date = scrapy.Field()  # 应用更新日期
+    developer = scrapy.Field()  # 开发者
+    version = scrapy.Field()  # 应用版本
+    introduce = scrapy.Field()  # 应用简介
 
 
 # 微信公众号
