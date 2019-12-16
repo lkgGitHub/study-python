@@ -14,6 +14,12 @@ class SgccItem(scrapy.Item):
     pass
 
 
+class PanSouItem(scrapy.Item):
+    title = scrapy.Field
+    url = scrapy.Field
+    time = scrapy.Field()  # 时间
+
+
 # 微信公众号
 class AccountItem(scrapy.Item):
     name = scrapy.Field()  # 微信名
@@ -21,4 +27,4 @@ class AccountItem(scrapy.Item):
     introduction = scrapy.Field()  # 功能介绍
     authentication = scrapy.Field()  # 微信认证
     article_lately = scrapy.Field()  # 最近文章：
-    time = scrapy.Field()
+    time = scrapy.Field()  # 时间
