@@ -19,7 +19,7 @@
 # 创建项目
 scrapy startproject sgcc
 # 创建爬虫
-  MetaSearch MetaSearch.com
+scrapy genspider MetaSearch MetaSearch.com
 ```
 
  
