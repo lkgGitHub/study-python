@@ -33,8 +33,11 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 8
 # TELNETCONSOLE_ENABLED = False
 
 # 重写请求headers （Override the default request headers）
-# DEFAULT_REQUEST_HEADERS = {
-# }
+DEFAULT_REQUEST_HEADERS = {
+    "Accept-Encoding": "gzip, deflate, br",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/78.0.3904.108 Safari/537.36 "
+}
 
 # 爬虫中间件（Spider Middleware）【https://doc.scrapy.org/en/latest/topics/spider-middleware.html】
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html

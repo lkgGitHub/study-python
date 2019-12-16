@@ -33,7 +33,6 @@ class WenkuSpider(scrapy.Spider):
             yield Request(url, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
-
         dls = response.xpath("//div[@class='search-result']/dl")
         for dl in dls:
             title = dl.xpath("./dt[@class='logFirstClickTime mb6 clearfix']/p[@class='fl']/a/@title").extract_first()

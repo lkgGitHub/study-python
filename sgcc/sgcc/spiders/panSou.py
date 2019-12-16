@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from scrapy.loader import ItemLoader
+
+from ..items import PanSouItem
 
 base_headers = {
     "Connection": "keep-alive",
     "Upgrade-Insecure-Requests": "1",
-
     "Accept-Encoding": "gzip, deflate",
     "Accept-Language": "zh-CN,zh;q=0.9",
     "Host": "www.kengso.com",
@@ -32,6 +34,3 @@ class PansouSpider(scrapy.Spider):
             href = li.xpath("./a/@href").extract_first()
             title = li.xpath("./a/@title").extract_first()
             time = li.xpath("./a/span[@class='l-size']/text()").extract_first()
-            print(title)
-            print(href)
-            print(time)
