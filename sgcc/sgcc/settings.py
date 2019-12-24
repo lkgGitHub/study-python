@@ -4,6 +4,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+# 自定义配置
+# mysql 配置
+MYSQL_DB_NAME = 'sgcc'
+MYSQL_HOST = '127.0.0.1'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'asdfgh'
+#############################################################################################
+
 BOT_NAME = 'sgcc'
 
 SPIDER_MODULES = ['sgcc.spiders']
@@ -58,9 +66,9 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'sgcc.pipelines.SgccPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   'sgcc.pipelines.MySQLPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

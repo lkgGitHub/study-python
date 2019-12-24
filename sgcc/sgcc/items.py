@@ -30,5 +30,5 @@ class AccountItem(scrapy.Item):
     account = scrapy.Field()  # 微信号
     introduction = scrapy.Field()  # 功能介绍
     authentication = scrapy.Field()  # 微信认证
-    article_lately = scrapy.Field()  # 最近文章：
-    time = scrapy.Field()  # 时间
+    recent_article = scrapy.Field()  # 最近文章
+    update_time = scrapy.Field()  # 更新时间

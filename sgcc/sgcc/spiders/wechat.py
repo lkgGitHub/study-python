@@ -19,8 +19,8 @@ base_headers = {
 }
 
 
-class SogouSpider(scrapy.Spider):
-    name = 'sogou'
+class WechatSpider(scrapy.Spider):
+    name = 'wechat'
     allowed_domains = ['weixin.sogou.com']
 
     # '搜公众号'url格式
@@ -56,10 +56,10 @@ class SogouSpider(scrapy.Spider):
                 elif key == '微信认证：':
                     item['authentication'] = ''.join(dl.xpath('./dd//text()').extract())
                 elif key == '最近文章：':
-                    item['article_lately'] = ''.join(dl.xpath('./dd/a//text()').extract())
+                    item['recent_article'] = ''.join(dl.xpath('./dd/a//text()').extract())
                     timestamp = dl.xpath('./dd/span//text()').re_first('document.write\(timeConvert\(\'(.*?)\'\)\)')
                     if timestamp:
                         d_time = datetime.fromtimestamp(int(timestamp))
                         time_str = d_time.strftime("%Y-%m-%d %H:%M:%S")
-                        item['time'] = time_str
+                        item['update_time'] = time_str
             yield item
