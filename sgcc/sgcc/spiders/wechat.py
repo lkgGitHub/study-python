@@ -28,6 +28,9 @@ class WechatSpider(scrapy.Spider):
                        'type=1&query={word}&_sug_type_=&s_from=input&_sug_=y&ie=utf8&page={page}'
 
     def start_requests(self):
+        from . import get_keywords
+        keyrords = get_keywords()
+
         account_headers = base_headers
         account_headers["Sec-Fetch-Site"] = "same-origin"
         account_headers["Referer"] = "https://weixin.sogou.com/"
