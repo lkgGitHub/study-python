@@ -30,6 +30,8 @@ class MySQLPipeline(object):
     def process_item(self, item, spider):
         if spider.name == 'wechat':
             self.insert_wechat(item)
+        elif spider.name == 'huawei':
+            self.insert_app(item)
         return item
 
     # 插入数据
@@ -45,3 +47,6 @@ class MySQLPipeline(object):
         sql = "INSERT INTO wechat (wechat.`name`, wechat.`account`, wechat.`introduction`, wechat.`authentication`" \
               ", wechat.`recent_article`, wechat.`update_time`) VALUES (%s,%s,%s,%s,%s,%s)"
         self.db_cur.execute(sql, values)
+
+    def insert_app(self, item):
+        pass
