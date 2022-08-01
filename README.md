@@ -13,6 +13,7 @@ FT中文网：http://www.ftchinese.com/
 
 第一财经：https://www.yicai.com/
 
+中国能源网 [http://www.cnenergynews.cn/]
 ## 备注
 统一时间格式: YY-NN-DD HH:MM
 
