@@ -35,7 +35,7 @@ class WechatSpider(scrapy.Spider):
         account_headers["Sec-Fetch-Site"] = "same-origin"
         account_headers["Referer"] = "https://weixin.sogou.com/"
 
-        word = '国家电网'
+        word = '牛顿'
         for page in range(1, 3):
             time.sleep(random.uniform(3, 6))
             yield scrapy.Request(url=self.page_account_url.format(word=word, page=page), headers=account_headers,

@@ -26,7 +26,7 @@ class BaiduSpider(scrapy.Spider):
     start_urls = ['http://baidu.com/']
 
     def start_requests(self):
-        keyword = '国网'
+        keyword = '牛顿'
         url = "https://www.baidu.com/s?ie=utf-8&wd={}".format(keyword)
         search_url = "https://www.baidu.com/s?ie=utf-8&wd={wd}"
         yield Request(search_url.format(wd=keyword), headers=base_headers, callback=self.parse)

@@ -26,7 +26,7 @@ class SogouSpider(scrapy.Spider):
     allowed_domains = ['sogou.com']
 
     def start_requests(self):
-        keyword = '国网'
+        keyword = '牛顿'
         search_url = "https://www.sogou.com/web?query={wd}&_asf=www.sogou.com&ie=utf8&from=index-nologin&s_from=index"
         yield Request(search_url.format(wd=keyword), headers=base_headers, callback=self.parse)
 

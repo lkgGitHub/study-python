@@ -24,7 +24,7 @@ class PansouSpider(scrapy.Spider):
     base_url = 'http://www.kengso.com/'
 
     def start_requests(self):
-        wd = "国网"
+        wd = "牛顿"
         search_url = "http://www.kengso.com/s?st=0&wd={wd}".format(wd=wd)
         yield scrapy.Request(search_url, headers=base_headers)
 

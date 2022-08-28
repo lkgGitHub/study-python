@@ -9,7 +9,7 @@ headers = {
 
 if __name__ == '__main__':
     search_url = 'https://gitee.com/api/v5/search/repositories?q={wd}page={page}&per_page=3&order=desc'
-    word = '国网'
+    word = '牛顿'
     page = 1
     url = search_url.format(word=word, page=page)
     resopnse = requests.get(url, headers=headers)

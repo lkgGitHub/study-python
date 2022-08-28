@@ -6,21 +6,21 @@
 
 # 自定义配置
 # mysql 配置
-MYSQL_DB_NAME = 'sgcc'
+MYSQL_DB_NAME = 'nd'
 MYSQL_HOST = '127.0.0.1'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'asdfgh'
+MYSQL_PASSWORD = '123456'
 #############################################################################################
 
-BOT_NAME = 'sgcc'
+BOT_NAME = 'nd'
 
-SPIDER_MODULES = ['sgcc.spiders']
-NEWSPIDER_MODULE = 'sgcc.spiders'
+SPIDER_MODULES = ['nd.spiders']
+NEWSPIDER_MODULE = 'nd.spiders'
 
 LOG_LEVEL = 'DEBUG'  # CRITICAL, ERROR, WARNING, INFO, DEBUG
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'sgcc (+http://www.yourdomain.com)'
+# USER_AGENT = 'nd (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -50,13 +50,13 @@ DEFAULT_REQUEST_HEADERS = {
 # 爬虫中间件（Spider Middleware）【https://doc.scrapy.org/en/latest/topics/spider-middleware.html】
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'sgcc.middlewares.SgccSpiderMiddleware': 543,
+#    'nd.middlewares.NiuDunSpiderMiddleware': 543,
 # }
 
 # 下载中间件（downloader middlewares）【https://doc.scrapy.org/en/latest/topics/downloader-middleware.html】
 # 作用：更换代理IP，更换Cookies，更换User-Agent，自动重试。。数字越小的中间件越先执行
 # DOWNLOADER_MIDDLEWARES = {
-#    'sgcc.middlewares.SgccDownloaderMiddleware': 543,
+#    'nd.middlewares.NiuDunDownloaderMiddleware': 543,
 # }
 
 # 扩展(extensions) 【https://doc.scrapy.org/en/latest/topics/extensions.html】
@@ -67,7 +67,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'sgcc.pipelines.MySQLPipeline': 300,
+   'nd.pipelines.MySQLPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

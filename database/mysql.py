@@ -2,7 +2,7 @@ import pymysql
 
 
 if __name__ == '__main__':
-    connect = pymysql.Connect(host='127.0.0.1', user='root', password='asdfgh', database='bootdo', charset='utf8')
+    connect = pymysql.Connect(host='127.0.0.1', user='root', password='123456', database='bootdo', charset='utf8')
     # 获取游标
     cursor = connect.cursor()
 

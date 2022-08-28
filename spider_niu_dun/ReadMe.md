@@ -1,4 +1,4 @@
-# sgcc 国家电网
+# nd 牛顿
 
 # 任务
 - [x] 1.元搜索,网站的链接的发现与识别
@@ -29,7 +29,7 @@
 
 ```shell script
 # 创建项目
-scrapy startproject sgcc
+scrapy startproject nd
 # 创建爬虫
 scrapy genspider MetaSearch MetaSearch.com
 ```

@@ -26,7 +26,7 @@ class WenkuSpider(scrapy.Spider):
     search_url = 'https://wenku.baidu.com/search?word={word}org=0&fd=0&lm=0&od=0&pn={pn}'
 
     def start_requests(self):
-        keywords = ['国家电网']
+        keywords = ['牛顿']
         for keyword in keywords:
             url = self.search_url.format(word=keyword, pn=10)
             print(url)

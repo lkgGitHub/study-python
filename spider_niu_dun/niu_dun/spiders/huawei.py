@@ -29,7 +29,7 @@ class HuaweiSpider(scrapy.Spider):
     allowed_domains = ['huawei.com']
 
     def start_requests(self):
-        keyword = '国网'
+        keyword = '牛顿'
         search_url = 'https://appstore.huawei.com/search/{}'
         yield Request(search_url.format(keyword), headers=headers)
 

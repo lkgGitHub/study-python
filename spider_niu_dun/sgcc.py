@@ -11,7 +11,7 @@ cmdline.execute("scrapy crawl sogou".split())
 
 def insert_mysql():
     import pymysql
-    db_conn = pymysql.connect(host='localhost', port=3306, db='sgcc', user='root', passwd='asdfgh', charset='utf8')
+    db_conn = pymysql.connect(host='localhost', port=3306, db='nd', user='root', passwd='123456', charset='utf8')
     db_cur = db_conn.cursor()
     keyword = []
     with open('keyword.txt', 'r', encoding='utf-8') as f:
