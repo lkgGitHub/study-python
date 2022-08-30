@@ -1,13 +1,15 @@
 .idea/
+.vscode/
+
 *.pyc
 *.log
 *.csv
-scrapySpider/*.json
 *.xlsx
 *.txt
+*.vs
 
+scrapySpider/*.json
 textCNN_pytorch-master/
 */data/
 */outpath/
-.vs/
 url_project/black.txt
