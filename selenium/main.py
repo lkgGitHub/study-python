@@ -55,6 +55,7 @@ def qi_men(t: datetime):
 driver = webdriver.Chrome()
 
 if __name__ == '__main__':
+    startTime = datetime.datetime.now()
     options = webdriver.ChromeOptions()
     # options.binary_location = "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
     options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -75,3 +76,4 @@ if __name__ == '__main__':
         qi_men(start)
         start = start + datetime.timedelta(days=1)
     driver.close()
+    print(f"spend time {datetime.datetime.now() - startTime}")
