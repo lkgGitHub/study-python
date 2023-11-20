@@ -101,4 +101,3 @@ class YicaiSpider(scrapy.Spider):
     #     print("keywords: %s, content: %s" % (keywords, content))
     #     news_item['content'] = content
     #     news_item["remark"] = {"频道": channel_name, "来源": news_source, "关键字": keywords}
-

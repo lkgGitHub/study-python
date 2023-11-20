@@ -25,7 +25,7 @@ def wordcount(word_list: []) -> {}:
 
 if __name__ == '__main__':
     d = path.dirname(__file__)
-    with open(d+"/news.csv", encoding='utf-8') as f:
+    with open(d + "/news.csv", encoding='utf-8') as f:
         f_csv = csv.reader(f)
         headers = next(f_csv)
 
@@ -45,4 +45,3 @@ if __name__ == '__main__':
         image = wordcloud.to_image()
         # 4.显示图片
         image.show()
-

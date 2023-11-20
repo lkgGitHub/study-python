@@ -18,6 +18,7 @@ class SogouWeixinSpider(scrapy.Spider):
                        'type=2&query={word}&_sug_type_=&s_from=input&_sug_=y&page={page}&ie=utf8'
 
     test_url = 'https://weixin.sogou.com/weixin?query=%E5%90%89%E4%BB%96&_sug_type_=&sut=3885&lkt=5%2C1542871482953%2C1542871486820&s_from=input&_sug_=n&type=2&sst0=1542871486923&page=20&ie=utf8&w=01019900&dr=1'
+
     # with open('/Users')
 
     def start_requests(self):

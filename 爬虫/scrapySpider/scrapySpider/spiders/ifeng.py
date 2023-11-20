@@ -16,7 +16,7 @@ class IfengSpider(scrapy.Spider):
     count = 0
 
     def start_requests(self):
-        yield Request("https://finance.ifeng.com/", callback=self.parse, dont_filter=True)   # 财经首页
+        yield Request("https://finance.ifeng.com/", callback=self.parse, dont_filter=True)  # 财经首页
         yield Request("https://finance.ifeng.com/stock/", callback=self.parse, dont_filter=True)  # 股票首页
         yield Request("https://finance.ifeng.com/ipo/", callback=self.parse, dont_filter=True)  # 新股
         yield Request("https://finance.ifeng.com/stock/gstzgc/", callback=self.parse, dont_filter=True)  # 投资观察
@@ -24,7 +24,7 @@ class IfengSpider(scrapy.Spider):
 
     def parse(self, response):
         a = response.xpath("//a[contains(@href, 'https://finance.ifeng.com/c')]/@href").extract()
-        print("=="*10, ">", len(a))
+        print("==" * 10, ">", len(a))
         for url in a:
             if "#_wth_cs" in url:
                 pass

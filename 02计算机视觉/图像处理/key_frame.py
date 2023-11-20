@@ -18,8 +18,8 @@ def cv_keyFrame():
             print('not res , not image')
             break
         times += 1
-        cv2.imwrite(outpath + str(times)+'.jpg', image)
-        print(outpath + str(times)+'.jpg')
+        cv2.imwrite(outpath + str(times) + '.jpg', image)
+        print(outpath + str(times) + '.jpg')
     print('图片提取结束')
     video.release()
     print("用时:{}s".format(int(time.time() - start)))

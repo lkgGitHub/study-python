@@ -45,4 +45,3 @@ if __name__ == '__main__':
     nums2 = [2, 5, 6]
     n = 3
     merge(nums1, m, nums2, n)
-

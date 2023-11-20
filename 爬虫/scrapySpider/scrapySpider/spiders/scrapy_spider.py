@@ -23,4 +23,5 @@ class scrapy_spider(scrapy.Spider):
 
 if __name__ == '__main__':
     from scrapy import cmdline
+
     cmdline.execute("scrapy crawl scrapy_spider".split())
