@@ -1,6 +1,7 @@
 import os.path
 
-import cv2  # opencv读取的格式是BGR
+# pip3 install opencv-python opencv-contrib-python matplotlib
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -21,6 +22,9 @@ def read_image():
     print("img.size:", img.size)
     print("img.dtype:", img.dtype)
     print("img:", img)
+    # 截取部分图像数据
+    cat = img[0:200, 0:200]
+    cv_show('cat', cat)
 
 
 def read_video():
@@ -36,11 +40,15 @@ def read_video():
         if opened:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             cv2.imshow('result', gray)
-            if cv2.waitKey(100) & 0xFF == 27:
+            if cv2.waitKey(10) & 0xFF == 27:
                 break
     vc.release()
     cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
-    read_video()
+    img = cv2.imread(os.path.join(base_dir, "cat.jpg"))
+    # 边界填充
+    top_size, bottom_size, left_size, right_size = (50, 50, 50, 50)
+    cv2.copyMakeBorder(img, top_size, bottom_size, left_size, right_size, borderType=cv2.BORDER_REPLICATE)
+    plt.subplots(231)
