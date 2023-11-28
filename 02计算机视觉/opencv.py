@@ -8,7 +8,13 @@ import numpy as np
 base_dir = "/Users/lkg/Downloads/计算机视觉/第一章：Opencv/opencv计算机视觉实战/图像操作"
 
 
-def cv_show(name, img):
+def cv_show(img, name):
+    cv2.imshow(name, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def show_image(name, img):
     cv2.imshow(name, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -52,12 +58,6 @@ def boundary_fill():
     top_size, bottom_size, left_size, right_size = (50, 50, 50, 50)
     cv2.copyMakeBorder(img, top_size, bottom_size, left_size, right_size, borderType=cv2.BORDER_REPLICATE)
     plt.subplots(231)
-
-
-def show_image(name, img):
-    cv2.imshow(name, img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 
 def image_smoothing():
@@ -211,5 +211,131 @@ def diff_sobel():
     show_image("lena", img)
 
 
+def canny():
+    """ Canny边缘检测
+           使用高斯滤波器，以平滑图像，滤除噪声。
+           计算图像中每个像素点的梯度强度和方向。
+           应用非极大值（Non-Maximum Suppression）抑制，以消除边缘检测带来的杂散响应。
+           应用双阈值（Double-Threshold）检测来确定真实的和潜在的边缘。
+           通过抑制孤立的弱边缘最终完成边缘检测。
+    """
+    img = cv2.imread(os.path.join(base_dir, 'lena.jpg'), cv2.IMREAD_GRAYSCALE)
+    v1 = cv2.Canny(img, 80, 250)
+    v2 = cv2.Canny(img, 50, 100)
+    res = np.hstack((v1, img, v2))
+    show_image("res", res)
+
+    img = cv2.imread(os.path.join(base_dir, "car.png"), cv2.IMREAD_GRAYSCALE)
+    v1 = cv2.Canny(img, 120, 250)
+    v2 = cv2.Canny(img, 50, 100)
+    res = np.hstack((v1, img, v2))
+    show_image("res", res)
+
+
+def pyramid():
+    """ 图像金字塔¶
+            高斯金字塔
+            拉普拉斯金字塔
+    """
+    img = cv2.imread(os.path.join(base_dir, 'AM.png'))
+    show_image("img", img)
+    print(img.shape)
+
+    up = cv2.pyrUp(img)
+    show_image("up", up)
+    print(up.shape)
+
+    down = cv2.pyrDown(img)
+    show_image("down", down)
+    print(down.shape)
+
+    up = cv2.pyrUp(img)
+    up_down = cv2.pyrDown(up)
+    show_image('img,up_down', np.hstack((img, up_down)))
+
+    # 拉普拉斯金字塔
+    up = cv2.pyrUp(img)
+    up_down = cv2.pyrDown(up)
+    show_image('img-up_down', img - up_down)
+
+
+def find_contours():
+    """cv2.findContours(img,mode,method)
+        mode:轮廓检索模式
+            - RETR_EXTERNAL ：只检索最外面的轮廓；
+            - RETR_LIST：检索所有的轮廓，并将其保存到一条链表当中；
+            - RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界;
+            - RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次;
+
+        method:轮廓逼近方法
+            - CHAIN_APPROX_NONE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。
+            - CHAIN_APPROX_SIMPLE:压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。
+
+        使用 cv2.findContours() 的基本步骤：
+            将图像转换为灰度图像。
+            对灰度图像进行二值化处理。
+            使用 cv2.findContours() 查找轮廓。
+            使用 cv2.drawContours() 绘制轮廓。
+
+    """
+    img = cv2.imread(os.path.join(base_dir, 'contours.png'))
+    cv_show(img, "contours")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 转灰度图
+    ret, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+    cv_show(thresh, "thresh")
+    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    # 传入绘制图像，轮廓，轮廓索引，颜色模式，线条厚度
+    # 注意需要copy,要不原图会变。。
+    draw_img = img.copy()
+    res = cv2.drawContours(draw_img, contours, -1, (0, 0, 255), 2)
+    cv_show(res, "drawContours")
+    draw_img = img.copy()
+    res = cv2.drawContours(draw_img, contours, 2, (0, 0, 255), 2)
+    cv_show(res, 'drawContours2')
+
+    # 轮廓特征
+    cnt = contours[0]
+    print("面积：", cv2.contourArea(cnt))  # 面积
+    print("周长：", cv2.arcLength(cnt, True))  # 周长，True 表示闭合的
+
+    # 轮廓近似
+    img = cv2.imread(os.path.join(base_dir, 'contours2.png'))
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    cnt = contours[0]
+    draw_img = img.copy()
+    res = cv2.drawContours(draw_img, [cnt], -1, (0, 0.255), 2)
+    cv_show(res, 'res')
+    epsilon = 0.1 * cv2.arcLength(cnt, True)
+    approx = cv2.approxPolyDP(cnt, epsilon, True)
+    draw_img = img.copy()
+    res = cv2.drawContours(draw_img, [approx], -1, (0, 0, 255), 2)
+    cv_show(res, "approx")
+
+    # 边界矩形
+    img = cv2.imread(os.path.join(base_dir, 'contours.png'))
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    cnt = contours[0]
+    x, y, w, h = cv2.boundingRect(cnt)
+    img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    cv_show(img, "rect")
+
+    area = cv2.contourArea(cnt)
+    x, y, w, h = cv2.boundingRect(cnt)
+    rect_area = w * h
+    extent = float(area) / rect_area
+    print('轮廓面积与边界矩形比', extent)
+
+    # 外接圆
+    (x, y), radius = cv2.minEnclosingCircle(cnt)
+    center = (int(x), int(y))
+    radius = int(radius)
+    circle = cv2.circle(img, center, radius, (0, 255, 0), 2)
+    cv_show(circle, "circle")
+
+
 if __name__ == "__main__":
-    diff_sobel()
+    find_contours()
