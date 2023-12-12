@@ -69,12 +69,12 @@ if __name__ == '__main__':
 
     # 标准化处理
     input_features = preprocessing.StandardScaler().fit_transform(features)
+    print("input_features shape:", input_features.shape)  # (348, 14)
 
     # 构建网络模型
-    x = torch.tensor(input_features, dtype=float)
-    y = torch.tensor(labels, dtype=float)
+    # x = torch.tensor(input_features, dtype=float)
+    # y = torch.tensor(labels, dtype=float)
 
-    print("input_features shape:", input_features.shape)  # (348, 14)
     # 权重参数初始化
     # weights = torch.randn((14, 128), dtype=float, requires_grad=True)
     # biases = torch.randn((128), dtype=float, requires_grad=True)
@@ -121,7 +121,7 @@ if __name__ == '__main__':
         torch.nn.Sigmoid(),  # 激活函数
         torch.nn.Linear(hidden_size, output_size)
     )
-    cost = torch.nn.MSELoss(reduction="mean")
+    cost = torch.nn.MSELoss(reduction='mean')
     optimizer = torch.optim.Adam(my_nn.parameters(), lr=0.01)
 
     # 训练网络
@@ -134,6 +134,8 @@ if __name__ == '__main__':
             xx = torch.tensor(input_features[start:end], dtype=torch.float, requires_grad=True)
             yy = torch.tensor(labels[start: end], dtype=torch.float, requires_grad=True)
             prediction = my_nn(xx)
+            # print("prediction.shape", prediction.shape)
+            # print("yy.shape", yy.shape)
             loss = cost(prediction, yy)
             optimizer.zero_grad()
             loss.backward(retain_graph=True)
@@ -143,3 +145,35 @@ if __name__ == '__main__':
         if i % 100 == 0:
             losses.append(np.mean(batch_loss))
             print(i, np.mean(batch_loss))
+
+    x = torch.tensor(input_features, dtype=torch.float)
+    predict = my_nn(x).data.numpy()
+    # 转换日期格式
+    dates = [f'{year}-{month}-{day}' for year, month, day in zip(years, months, days)]
+    dates = [datetime.datetime.strptime(date, '%Y-%m-%d') for date in dates]
+    # 创建一个表格来存日期和其对应的标签数值
+    true_data = pd.DataFrame(data={"date": dates, "actual": labels})
+
+    # 同理，再创建一个来存日期和其对应的模型预测值
+    months = features[:, feature_header.index('month')]
+    days = features[:, feature_header.index('day')]
+    years = features[:, feature_header.index('year')]
+    test_dates = [f'{year}-{month}-{day}' for year, month, day in zip(years, months, days)]
+    test_dates = [datetime.datetime.strptime(date, '%Y-%m-%d') for date in test_dates]
+
+    predictions_data = pd.DataFrame(data={'date': test_dates, 'prediction': predict.reshape(-1)})
+
+    plt.clf()  # 清除当前图形的所有轴，但保留窗口打开，以便可以重复用于其他绘图。
+    # 真实值
+    plt.plot(true_data['date'], true_data['actual'], 'b-', label='actual')
+
+    # 预测值
+    plt.plot(predictions_data['date'], predictions_data['prediction'], 'ro', label='prediction')
+    plt.xticks(rotation=60)
+    plt.legend()
+
+    # 图名
+    plt.xlabel('Date')
+    plt.ylabel('Maximum Temperature (F)')
+    plt.title('Actual and Predicted Values')
+    plt.show()
