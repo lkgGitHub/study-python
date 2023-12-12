@@ -1,149 +1,113 @@
+import datetime
 import os.path
 
-import torch
-import pickle
-import gzip
-from pathlib import Path
-import requests
-from matplotlib import pyplot
 import numpy as np
-import torch.nn.functional as F
-from torch import nn
+import pandas as pd
+import torch
+from matplotlib import pyplot as plt
+from sklearn import preprocessing
 
 base_dir = "/Users/lkg/computer-vision/3：pytorch/2-3神经网络实战分类与回归任务"
 
-
-class mnist_nn(nn.Module):
-    def __init__(self):
-        super(mnist_nn, self).__init__()
-        self.hidden1 = nn.Linear(784, 128)  # Linear 线形层
-        self.hidden2 = nn.Linear(128, 256)
-        self.out = nn.Linear(256, 10)
-        self.dropout = nn.Dropout(0.5)
-
-    def forward(self, x):
-        """ forward 向前传播。反向传播 pytorch 自动完成"""
-        x = F.relu(self.hidden1(x))
-        x = self.dropout(x)  # 全连接层一般都需要加 dropout
-        x = F.relu(self.hidden2(x))
-        x = self.dropout(x)
-        x = self.out(x)
-        return x
-
-
-def loss_batch(model, loss_func, xb, yb, opt=None):
-    loss = loss_func(model(xb), yb)
-
-    if opt is not None:
-        loss.backward()
-        opt.step()
-        opt.zero_grad()
-
-    return loss.item(), len(xb)
-
-
 if __name__ == '__main__':
-    # 1. 准备数据
-    DATA_PATH = Path(os.path.join(base_dir, "data"))
-    PATH = DATA_PATH / "mnist"
-    PATH.mkdir(parents=True, exist_ok=True)
-    URL = "http://deeplearning.net/data/mnist/"
-    FILENAME = "mnist.pkl.gz"
-    if not (PATH / FILENAME).exists():  # 不存在就下载
-        content = requests.get(URL + FILENAME).content
-        (PATH / FILENAME).open("wb").write(content)
+    features = pd.read_csv(os.path.join(base_dir, "temps.csv"))
+    print(features.head(3))
+    print("数据维度", features.shape)  # (348, 9)，即 348 行，9列
+    years = features['year']
+    months = features['month']
+    days = features['day']
+    dates = [f'{year}-{month}-{day}' for year, month, day in zip(years, months, days)]
+    dates = [datetime.datetime.strptime(d, '%Y-%m-%d') for d in dates]
+    print(dates[0:5])
+    plt.style.use('fivethirtyeight')
 
-    # 2. 打开数据
-    with gzip.open((PATH / FILENAME).as_posix(), "rb") as f:
-        # pickle 持续化模块：就是让数据持久化保存。
-        ((x_train, y_train), (x_valid, y_valid), _) = pickle.load(f, encoding="latin-1")
-        pyplot.imshow(x_train[0].reshape((28, 28)), cmap="gray")
-        print(x_train.shape)  # (50000, 784) 784 是 mnist 数据集每个样本的像素点个数
-        x_train, y_train, x_valid, y_valid = map(torch.tensor, (x_train, y_train, x_valid, y_valid))
-        n, c = x_train.shape
-        x_train, x_train.shape, y_train.min(), y_train.max()
-        print("x_train:", x_train)
-        print("y_train:", y_train)
-        print(x_train.shape)
-        print(y_train.min(), y_train.max())
-        # cross_entropy 交叉熵 交叉熵是一种用于衡量两个概率分布之间差异的度量。
-        # 它常用于评估模型的预测结果与真实标签之间的差异。
-        loss_func = F.cross_entropy  # 损失函数
-        #
-        #
-        # def model(xb1):
-        #     return xb1.mm(weights) + bias
-        #
-        #
-        # bs = 64  # batch_size 一批处理的数量
-        # xb = x_train[0:bs]
-        # yb = y_train[0:bs]
-        # print(f"xb:{xb} \nyb:{yb}")
-        # weights = torch.randn([784, 10], dtype=torch.float, requires_grad=True)  # 权重，初始化随机设置
-        # bias = torch.zeros(10, requires_grad=True)  # bias 偏置
-        # print("loss_func(model(xb), yb) :", loss_func(model(xb), yb))
+    # 设置布局
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10, 10))
+    fig.autofmt_xdate(rotation=45)  # rotation=45, 旋转 45 度
 
-        net = mnist_nn()
-        print("net:", net)
-        print("net.parameters:", net.parameters())
+    # 标签值
+    ax1.plot(dates, features['actual'])
+    ax1.set_xlabel('')
+    ax1.set_ylabel('Temperature')
+    ax1.set_title('actual Max Temp')
 
-        for name, parameter in net.named_parameters():
-            print(f"name: {name}, \nparameter: {parameter}, \nparameter.size(): {parameter.size()}")
+    # 昨天
+    ax2.plot(dates, features['temp_1'])
+    ax2.set_xlabel('')
+    ax2.set_ylabel('Temperature')
+    ax2.set_title('Previous Max Temp')
 
-        # 使用TensorDataset和DataLoader来简化
-        from torch.utils.data import TensorDataset
-        from torch.utils.data import DataLoader
+    # 前天
+    ax3.plot(dates, features['temp_2'])
+    ax3.set_xlabel('Date')
+    ax3.set_ylabel('Temperature')
+    ax3.set_title('Two Days Prior Max Temp')
 
-        bs = 64
-        train_ds = TensorDataset(x_train, y_train)
-        train_dl = DataLoader(train_ds, batch_size=bs, shuffle=True)
+    # 我的逗逼朋友
+    ax4.plot(dates, features['friend'])
+    ax4.set_xlabel('Date')
+    ax4.set_ylabel('Temperature')
 
-        valid_ds = TensorDataset(x_valid, y_valid)
-        valid_dl = DataLoader(valid_ds, batch_size=bs * 2)
+    plt.tight_layout(pad=2)
+    # plt.show()  # 语句用于显示绘制的图像
 
+    # 独热编码，get_dummies: 将离散型特征的每一种取值都看成一种状态
+    features = pd.get_dummies(features)
+    print("features.head(5):\n", features.head(5))
 
-        def get_data(train_ds, valid_ds, bs):
-            return (
-                DataLoader(train_ds, batch_size=bs, shuffle=True),
-                DataLoader(valid_ds, batch_size=bs * 2),
-            )
+    # 标签
+    labels = np.array(features['actual'])
 
+    # 在特征中去掉标签
+    features = features.drop('actual', axis=1)
 
-        def fit(steps, model, loss_func, opt, train_dl, valid_dl):
-            """ fit 训练函数。opt: 优化器"""
-            for step in range(steps):
-                model.train()  # 训练
-                for xb, yb in train_dl:
-                    loss_batch(model, loss_func, xb, yb, opt)
+    # 名字单独保存有一下
+    feature_header = list(features.columns)
+    print("feature_header:", feature_header)
 
-                # 训练完后：验证，评估
-                model.eval()
-                with torch.no_grad():
-                    losses, nums = zip(*[loss_batch(model, loss_func, xb, yb) for xb, yb in valid_dl])
-                val_loss = np.sum(np.multiply(losses, nums)) / np.sum(nums)
-                print('当前step:' + str(step), '验证集损失：' + str(val_loss))
+    features = np.array(features)
 
+    # 标准化处理
+    input_features = preprocessing.StandardScaler().fit_transform(features)
 
-        from torch import optim
+    # 构建网络模型
+    x = torch.tensor(input_features, dtype=float)
+    y = torch.tensor(labels, dtype=float)
 
+    print("input_features shape:", input_features.shape)  # (348, 14)
+    # 权重参数初始化
+    weights = torch.randn((14, 128), dtype=float, requires_grad=True)
+    biases = torch.randn((128), dtype=float, requires_grad=True)
+    weights2 = torch.randn((128, 1), dtype=float, requires_grad=True)
+    biases2 = torch.randn(1, dtype=float, requires_grad=True)
 
-        def get_model():
-            model = mnist_nn()
-            # SGD 是一种随机梯度下降优化器，lr：学习率。
-            return model, optim.SGD(model.parameters(), lr=0.001)
+    learning_rate = 0.01
+    losses = []
+    # for i in range(1000):
+    #     # 计算隐层。mm (matrix multiplication)，即矩阵乘法
+    #     hidden = x.mm(weights) + biases
+    #     # 加入激活函数。非线性映射
+    #     hidden = torch.relu(hidden)
+    #     # 预测结果
+    #     predictions = hidden.mm(weights2) + biases2
+    #     # 计算损失。mean: 计算输入张量中所有元素的平均值
+    #     loss = torch.mean((predictions - y) ** 2)  # 预测值减去实际值的平方
+    #     losses.append(loss.data.numpy())
+    #
+    #     if i % 100 == 0:
+    #         print("loss:", loss)
+    #
+    #     # 更新参数
+    #     weights.data.add_(- learning_rate * weights.grad.data)
+    #     biases.data.add_(- learning_rate * biases.grad.data)
+    #     weights2.data.add_(- learning_rate * weights2.grad.data)
+    #     biases2.data.add_(- learning_rate * biases2.grad.data)
+    #
+    #     # 每次迭代记得都清空
+    #     weights.grad.data.zero_()
+    #     biases.grad.data.zero_()
+    #     weights2.grad.data.zero_()
+    #     biases2.grad.data.zero_()
 
-
-        def loss_batch(model, loss_func, xb, yb, optimizer=None):
-            loss = loss_func(model(xb), yb)  # 计算损失函数
-
-            if optimizer is not None:
-                loss.backward()  # 反向传播
-                optimizer.step()  # 更新模型参数
-                optimizer.zero_grad()  # 清空之前的梯度
-
-            return loss.item(), len(xb)
-
-
-        train_dl, valid_dl = get_data(train_ds, valid_ds, bs)
-        model, opt = get_model()
-        fit(25, model, loss_func, opt, train_dl, valid_dl)
+        # 更简单的构建网络模型
+        input_size = input_features.shape[1]
