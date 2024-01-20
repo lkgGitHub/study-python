@@ -122,11 +122,11 @@ if __name__ == '__main__':
         torch.nn.Linear(hidden_size, output_size)
     )
     cost = torch.nn.MSELoss(reduction='mean')
-    optimizer = torch.optim.Adam(my_nn.parameters(), lr=0.01)
+    optimizer = torch.optim.Adam(my_nn.parameters(), lr=0.001)
 
     # 训练网络
     losses = []
-    for i in range(1000):
+    for i in range(5000):
         batch_loss = []
         # MINI-Batch方法来进行训练
         for start in range(0, len(input_features), batch_size):
