@@ -13,3 +13,5 @@ textCNN_pytorch-master/
 */data/
 */outpath/
 url_project/black.txt
+*/logs/
+02计算机视觉/yolov3/logs/

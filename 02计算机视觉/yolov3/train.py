@@ -4,6 +4,7 @@ import os
 from utils.logger import Logger
 from utils.parse_config import *
 from utils.utils import *
+from models import *
 
 import torch
 
@@ -30,7 +31,7 @@ if __name__ == "__main__":
         print(arg, ":", getattr(opt, arg))
 
     logger = Logger("logs")
-    # device = torch.device("cuda" if torch.cuda.is_available() else "")
+    device = torch.device("cuda" if torch.cuda.is_available() else "")
 
     os.makedirs("output", exist_ok=True)  # exist_ok=True 不抛出异常
     os.makedirs("checkpoints", exist_ok=True)
@@ -46,6 +47,22 @@ if __name__ == "__main__":
     class_names = load_classes(os.path.join(base_path, data_config["names"]))
     print("class_names:", class_names)
     for i, n in enumerate(class_names):
+        if i == 10:
+            break
         print(f'{i}: {n}')
 
     # Initiate model 初始化模型
+    model = Darknet(opt.model_def).to(device)
+    model.apply(weights_init_normal)
+
+    # If specified we start from checkpoint. 从 checkpoint 中启动
+    if opt.pretrained_weights:
+        if opt.pretrained_weights.endswith(".pth"):
+            model.load_state_dict(torch.load(opt.pretrained_weights))
+        else:
+            model.load_darknet_weights(opt.pretrained_weights)
+
+    # Get dataloader
+    train_path = train_path.split("/", os.sep)
+    dataset = ListDataset(train_path, base_path=base_path, augment=True,
+                          multiscale=opt.multiscale_training)
