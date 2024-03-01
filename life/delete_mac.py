@@ -51,5 +51,4 @@ def recursive_list_files(folder_path):
 if __name__ == '__main__':
     start_time = datetime.now()
     recursive_list_files(root)
-    end_time = datetime.now()
-    print(f"程序运行时间：{end_time - start_time}")
+    print(f"程序运行时间：{datetime.now() - start_time}")
