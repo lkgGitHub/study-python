@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 
-root = ""
+root = "C:\\code\\vscode"
 
 
 def recursive_list_files(folder_path):
