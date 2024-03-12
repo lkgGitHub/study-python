@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 
-root = "C:\\code\\vscode"
+root = "E:\\computer-vision"
 
 
 def recursive_list_files(folder_path):
@@ -16,11 +16,15 @@ def recursive_list_files(folder_path):
 
     delete_files = []
     not_delete_file = []
+    file_num = 0
     for dir_path, dir_names, file_names in os.walk(folder_path):
         for file in file_names:
+            file_num += 1
+            if file_num % 100 == 0:
+                print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file_num)
             if file.startswith('.'):
                 file_path = os.path.join(dir_path, file)
-                if file == '.DS_Store':
+                if file in ('.DS_Store', '.DS_Store', '__MACOSX'):
                     delete_files.append(file_path)
                     continue
                 # mode='rb' b：这个模式表示以二进制方式打开文件。在二进制模式下，文件的内容被视为字节流，而不是文本
@@ -30,7 +34,7 @@ def recursive_list_files(folder_path):
                         delete_files.append(file_path)
                     else:
                         not_delete_file.append(file_path)
-
+    print("delete files:", delete_files)
     # 删除文件
     delete_success_count = 0
     delete_failed_count = 0

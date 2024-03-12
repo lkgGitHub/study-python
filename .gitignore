@@ -10,8 +10,12 @@
 
 scrapySpider/*.json
 textCNN_pytorch-master/
-*/data/
-*/outpath/
+**/data/
+**/outpath/
 url_project/black.txt
-*/logs/
-02计算机视觉/04yolo/yolov3/logs/
+**/logs
+**/runs
+
+*.pt
+*.onnx
+
