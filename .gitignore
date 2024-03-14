@@ -9,13 +9,13 @@
 *.vs
 
 scrapySpider/*.json
-textCNN_pytorch-master/
 **/data/
 **/outpath/
-url_project/black.txt
 **/logs
 **/runs
+**/datasets
 
 *.pt
 *.onnx
 
+*.partial
