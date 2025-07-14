@@ -1,5 +1,6 @@
 .idea/
 .vscode/
+.venv
 
 *.pyc
 *.log
@@ -7,6 +8,7 @@
 *.xlsx
 *.txt
 *.vs
+*secret*
 
 scrapySpider/*.json
 **/data/
@@ -19,3 +21,4 @@ scrapySpider/*.json
 *.onnx
 
 *.partial
+
