@@ -7,7 +7,7 @@ import torch
 from matplotlib import pyplot as plt
 from sklearn import preprocessing
 
-base_dir = "/Users/lkg/computer-vision/3：pytorch/2-3神经网络实战分类与回归任务"
+base_dir = "computer-vision/3：pytorch/2-3神经网络实战分类与回归任务"
 
 if __name__ == '__main__':
     features = pd.read_csv(os.path.join(base_dir, "temps.csv"))

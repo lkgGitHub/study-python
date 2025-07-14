@@ -10,7 +10,7 @@ import numpy as np
 import torch.nn.functional as F
 from torch import nn
 
-base_dir = "/Users/lkg/computer-vision/3：pytorch/2-3神经网络实战分类与回归任务"
+base_dir = "computer-vision/3：pytorch/2-3神经网络实战分类与回归任务"
 
 
 class mnist_nn(nn.Module):

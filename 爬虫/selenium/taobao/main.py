@@ -13,7 +13,7 @@ if __name__ == '__main__':
     options = webdriver.ChromeOptions()
     # options.binary_location = "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
     options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    # chrome_driver_binary = "/Users/lkg/software/bin/chromedriver"
+    # chrome_driver_binary = "software/bin/chromedriver"
     driver = webdriver.Chrome(options=options)
     driver.get("https://m.tb.cn/h.U3jixwe")
 

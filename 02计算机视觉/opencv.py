@@ -5,7 +5,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-base_dir = "/Users/lkg/Downloads/计算机视觉/第一章：Opencv/opencv计算机视觉实战/图像操作"
+base_dir = "计算机视觉/第一章：Opencv/opencv计算机视觉实战/图像操作"
 
 
 def cv_show(img, name):
