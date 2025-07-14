@@ -79,7 +79,7 @@ dependencies = [
     "openpyxl==3.1.5",
     "packaging==25.0",
     "pandas==2.2.3",
-    "pillow==11.2.1",
+    "pillow==11.3.0",
     "platformdirs==4.3.8",
     "propcache==0.3.2",
     "pycparser==2.22",
